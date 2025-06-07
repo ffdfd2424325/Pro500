@@ -1,0 +1,37 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_android:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18' # Или 20, если ваш проект использует более новую версию Node.js
+
+    - name: Install npm dependencies
+      run: npm install
+
+    - name: Make Gradle wrapper executable
+      run: chmod +x android/gradlew
+
+    - name: Build Android Release APK
+      run: cd android && ./gradlew assembleRelease
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release-apk
+        path: android/app/build/outputs/apk/release/app-release.apk 
