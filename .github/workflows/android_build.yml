@@ -22,7 +22,7 @@ jobs:
         node-version: '18' # Или 20, если ваш проект использует более новую версию Node.js
 
     - name: Install npm dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Make Gradle wrapper executable
       run: chmod +x android/gradlew
