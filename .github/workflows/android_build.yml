@@ -21,11 +21,17 @@ jobs:
       with:
         node-version: '18' # Или 20, если ваш проект использует более новую версию Node.js
 
+    - name: Clear npm cache
+      run: npm cache clean --force
+
     - name: Install npm dependencies
       run: npm install --legacy-peer-deps
 
     - name: Make Gradle wrapper executable
       run: chmod +x android/gradlew
+
+    - name: Clean Android build cache
+      run: cd android && ./gradlew clean
 
     - name: Build Android Release APK
       run: cd android && ./gradlew assembleRelease
